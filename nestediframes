@@ -1,0 +1,91 @@
+package base;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+import java.time.Duration;
+
+public class GuviTask21Nestedframes {
+
+    public static void main(String[] args){
+
+        WebDriver driver = new ChromeDriver();
+        driver.get("https://the-internet.herokuapp.com/nested_frames");
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
+        driver.switchTo().frame(driver.findElement(By.xpath("//frame[@name='frame-top']")));
+        int frameCount = driver.findElements(By.tagName("frame")).size();
+        if(frameCount==3){
+            System.out.println("There are three frames on the page.");
+        } else {
+            System.out.println("There are not three frames on the page.");
+        }
+
+     driver.switchTo().frame(driver.findElement(By.xpath("//frame[@name='frame-left']")));
+        WebElement leftframetext = driver.findElement(By.tagName("body"));
+        String leftFrameTextContent = leftframetext.getText();
+        System.out.println("Left Frame Text: " + leftFrameTextContent);
+
+        if(leftFrameTextContent.equals("LEFT")){
+            System.out.println("Text verified");
+        } else {
+            System.out.println("Not verified");
+        }
+
+        driver.switchTo().parentFrame();
+
+        driver.switchTo().frame(driver.findElement(By.xpath("//frame[@name='frame-middle']")));
+        WebElement middleframetext = driver.findElement(By.tagName("body"));
+        String MiddleFrameTextContent = middleframetext.getText();
+        System.out.println("Middle Frame Text: " + MiddleFrameTextContent);
+
+        if(MiddleFrameTextContent.equals("MIDDLE")){
+            System.out.println("Text verified");
+        } else {
+            System.out.println("Not verified");
+        }
+
+        driver.switchTo().parentFrame();
+
+        driver.switchTo().frame(driver.findElement(By.xpath("//frame[@name='frame-right']")));
+        WebElement rightframetext = driver.findElement(By.tagName("body"));
+        String RightFrameTextContent = rightframetext.getText();
+        System.out.println("Right Frame Text: " + RightFrameTextContent);
+
+
+        if(RightFrameTextContent.equals("RIGHT")){
+            System.out.println("Text verified");
+        } else {
+            System.out.println("Not verified");
+        }
+        driver.switchTo().defaultContent();
+        driver.switchTo().frame(driver.findElement(By.xpath("//frame[@name='frame-bottom']")));
+
+
+        WebElement bottomframetext = driver.findElement(By.tagName("body"));
+        String BottomFrameTextContent = bottomframetext.getText();
+        System.out.println("Bottom Frame Text: " + BottomFrameTextContent);
+
+        if(BottomFrameTextContent.equals("BOTTOM")){
+            System.out.println("Text verified");
+        } else {
+            System.out.println("Not verified");
+        }
+
+driver.switchTo().defaultContent();
+        String title = driver.getTitle();
+        if(title.equals("FRAMES")){
+
+            System.out.println("Title is verified");
+
+        }else{
+            System.out.println("Title not verified");
+
+        }
+       driver.close();
+    }
+
+    }
+
